@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>NinjaMan</title>
+	<style type="text/css">
+		* {
+			margin: 0;
+			padding: 0;
+		}
+		.row {
+			line-height: 0;
+		}
+		.wall {
+			background-color: blue;
+			height: 40px;
+			width: 40px;
+			display: inline-block;
+		}
+		.sushi {
+			background-color: black;
+			height: 40px;
+			width: 40px;
+			display: inline-block;
+			background-image: url('sushi.png');
+			background-size: contain;
+		}
+		.onigiri {
+			background-color: black;
+			height: 40px;
+			width: 40px;
+			display: inline-block;
+			background-image: url('onigiri.png');
+			background-size: contain;
+		}
+		.pinky {
+			background-color: black;
+			height: 40px;
+			width: 40px;
+			display: inline-block;
+			background-image: url('pinky.gif');
+			background-size: contain;
+		}
+		.pumpky {
+			background-color: black;
+			height: 40px;
+			width: 40px;
+			display: inline-block;
+			background-image: url('pumpky.gif');
+			background-size: contain;
+		}
+		.red {
+			background-color: black;
+			height: 40px;
+			width: 40px;
+			display: inline-block;
+			background-image: url('red.gif');
+			background-size: contain;
+		}
+		.scaredy {
+			background-color: black;
+			height: 40px;
+			width: 40px;
+			display: inline-block;
+			background-image: url('scaredy.png');
+			background-size: contain;
+		}
+		.blank {
+			background-color: black;
+			height: 40px;
+			width: 40px;
+			display: inline-block;
+
+		}
+		#ninjaman {
+			background-color: black;
+			height: 40px;
+			width: 40px;
+			display: inline-block;
+			background-image: url('ninja.gif');
+			background-size: contain;
+			position: absolute;
+			left: 40px;
+			top: 40px;
+		}
+		.score {
+			background-color: white;
+			text: SCORE: 0;
+			height: 5;
+			width: 5;
+			position: absolute;
+			left: -50px;
+			top: 10px;
+
+		}
+	</style>
+</head>
+<body>
+	<div id='world'></div>
+	<div id='ninjaman'></div>
+	<div id='scoreboard'></div>
+</body>
+<script type="text/javascript">
+	var world = [
+		[1,1,1,1,1,1,1,1,1,1],
+		[1,0,2,2,2,2,3,2,2,1],
+		[1,2,1,1,3,2,1,1,2,1],
+		[1,3,2,3,2,3,3,2,3,1],
+		[1,2,1,2,3,2,2,1,2,1],
+		[1,2,1,1,2,2,1,1,2,1],
+		[1,3,2,3,2,2,3,2,3,1],
+		[1,2,1,1,2,3,1,1,2,1],
+		[1,2,1,2,2,2,3,1,2,1],
+		[1,4,5,6,2,2,3,2,2,1],
+		[1,1,1,1,1,1,1,1,1,1],
+
+	];
+	var worldDict = {
+		0: 'blank',
+		1: 'wall',
+		2: 'sushi',
+		3: 'onigiri',
+		4: 'pinky',
+		5: "pumpky", 
+		6: "red"
+	}
+	function drawWorld(){
+		output = "";
+
+		for(var row = 0; row < world.length; row++){
+			output += "<div class = 'row'>"
+			for(var x = 0; x < world[row].length; x++){
+				output += "<div class = '" + worldDict[
+					world[row][x]] +"' ></div>"
+				// worldDict[world[row][x]]
+	 		}
+	 		output += "</div>"
+		}
+		document.getElementById('world').innerHTML = output
+			;
+	}
+	drawWorld();
+	var ninjaman = {
+		x: 1,
+		y: 1
+	}
+
+	function drawNinjaman(){
+		document.getElementById('ninjaman').style.top = 
+			ninjaman.y * 40 + 'px'
+		document.getElementById('ninjaman').style.left = 
+			ninjaman.x * 40 + 'px'
+	}
+	drawNinjaman();
+	function text(txt, fnt, x, y, e){
+		context.fillstyle = c;
+		context.font = fnt;
+		context.fillText(txt, x, y);
+	}
+
+	document.onkeydown = function(e){
+		if(e.keyCode == 37){
+			if(world[ninjaman.y] [ninjaman.x - 1] != 1){
+				ninjaman.x--;
+			}	
+		}
+		if(e.keyCode == 38){
+				if(world[ninjaman.y - 1] [ninjaman.x] != 1){
+					ninjaman.y--;
+				}
+		}
+		if(e.keyCode == 39){
+			if(world[ninjaman.y] [ninjaman.x + 1] != 1){	
+				ninjaman.x++;
+			}
+		}
+
+		if(e.keyCode == 40){
+			if(world[ninjaman.y + 1] [ninjaman.x] != 1){	
+				ninjaman.y++;
+			}
+		}
+		world[ninjaman.y][ninjaman.x] = 0;
+		drawWorld()
+		drawNinjaman()
+		drawScoreboard()
+
+
+
+
+
+		// challenges-
+		// scoreboard- to track sushis eaten; sushi x 5pts ; onigiri x 10 pts 
+		// random world- hard
+		// ghosts to chase ninjaman-very hard
+	}				
+</script>
+</html>	
